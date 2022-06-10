@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ajax-Users Details</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+    </head>
+    <body>
+        
+    <center>
+        <form style="border:2px solid #000000;display:flex;" onsubmit="load_info()">
+            Enter the rollno:<input type="text" id="1">
+            <p id="2"></p>
+            <button>Get Information</button>
+        </form>
+    </center>
+        <script>
+            function load_info(){
+            var xhs=new XMLHttpRequest();
+            xhs.onreadystatechange= function (){
+                if(this.readyState === 4 && this.status === 200){
+                    var a=this.responseXML;
+                    users(a);
+                }
+                
+               };
+               
+              obj.open("GET","User_Info.xml",true);
+              obj.send();
+    
+    }
+    function users( list){
+        var names = list.getElementsByTagName("student");
+        var num=document.getElementById("1").value;
+        var flag=0;
+        var table="<table border='2px' > <tr><th>ID</th><td>";
+        for(var j = 0; j < names.length; j++) {
+            
+            
+            if(num.match(names[j].getElementsByTagName("rollno")[0].childNodes[0].nodeValue))
+            {
+                table+= names[j].getElementsByTagName("rollno")[0].childNodes[0].nodeValue+"</td></tr><tr><th>NAME</th><td>" ;
+                table+= names[j].getElementsByTagName("name")[0].childNodes[0].nodeValue +"</td></tr><tr><th>DOB</th><td>";
+                table+=names[j].getElementsByTagName("dob")[0].childNodes[0].nodeValue +"</td></tr><tr><th>INTERNAL MARK</th><td>" ;
+                table+=names[j].getElementsByTagName("imark")[0].childNodes[0].nodeValue +"</td></tr><tr><th>EXTERNAL MARK</th><td>";
+                table+=names[j].getElementsByTagName("emark")[0].childNodes[0].nodeValue+"</td></tr></table>" ;
+                document.getElementById("2").innerHTML=table;
+                flag=1;
+            }
+       
+       }
+     
+       if(flag===0){
+           document.getElementById("ids").innerHTML="Invalid Id";
+       }
+    }
+            
+        </script>
+    </body>
+</html>
